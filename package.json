@@ -1,0 +1,27 @@
+{
+  "name": "article",
+  "version": "1.0.0",
+  "description": "Simple article writing or blogging site with node, express and mongodb backend.",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NemesLaszlo/Article.git"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "mongodb"
+  ],
+  "author": "Laszlo Nemes",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/NemesLaszlo/Article/issues"
+  },
+  "homepage": "https://github.com/NemesLaszlo/Article#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
