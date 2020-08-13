@@ -32,6 +32,9 @@ app.set('view engine', 'pug');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+// Public folder
+app.use(express.static(path.join(__dirname, 'public')));
+
 // GET Home Page
 app.get('/', (req, res) => {
   Article.find({}, (err, articles) => {
@@ -68,6 +71,16 @@ app.post('/articles/add', (req, res) => {
     } else {
       res.redirect('/');
     }
+  });
+});
+
+// GET Get id specific article
+app.get('/article/:id', (req, res) => {
+  let { id } = req.params;
+  Article.findById(id, (err, article) => {
+    res.render('article', {
+      article,
+    });
   });
 });
 

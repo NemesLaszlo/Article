@@ -2,9 +2,24 @@ doctype html
 html
     head
         title Article Site
+        link(rel='stylesheet', href='/css/bootstrap.min.css')
     body
-        block content
-        br
-        hr
-        footer
-            p Copyright &copy; 2020
+        nav.navbar.navbar-expand-lg.navbar-light.bg-light
+            a.navbar-brand(href='/') Blog
+            button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarSupportedContent', aria-controls='navbarSupportedContent', aria-expanded='false', aria-label='Toggle navigation')
+                span.navbar-toggler-icon
+            #navbarSupportedContent.collapse.navbar-collapse
+                ul.navbar-nav.mr-auto
+                    li.nav-item.active
+                        a.nav-link(href='/')
+                            | Home 
+                    li.nav-item
+                        a.nav-link(href='/articles/add') Add Article        
+        .container
+            block content
+            br
+            hr
+            footer
+                p Copyright &copy; 2020
+        script(src='https://code.jquery.com/jquery-3.5.1.min.js')
+        script(src='/js/bootstrap.js')
