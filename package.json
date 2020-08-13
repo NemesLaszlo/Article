@@ -13,7 +13,8 @@
   "keywords": [
     "node",
     "express",
-    "mongodb"
+    "mongodb",
+    "pug"
   ],
   "author": "Laszlo Nemes",
   "license": "MIT",
@@ -22,6 +23,9 @@
   },
   "homepage": "https://github.com/NemesLaszlo/Article#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.9.28",
+    "pug": "^3.0.0"
   }
 }
