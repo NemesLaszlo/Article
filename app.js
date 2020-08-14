@@ -84,6 +84,37 @@ app.get('/article/:id', (req, res) => {
   });
 });
 
+// GET Get Edit Page
+app.get('/article/edit/:id', (req, res) => {
+  let { id } = req.params;
+  Article.findById(id, (err, article) => {
+    res.render('edit_article', {
+      title: 'Edit Article',
+      article,
+    });
+  });
+});
+
+// POST Edit Page Function request
+app.post('/article/edit/:id', (req, res) => {
+  let { title, author, body } = req.body;
+  let article = {};
+  article.title = title;
+  article.author = author;
+  article.body = body;
+
+  let query = { _id: req.params.id };
+
+  Article.update(query, article, (err) => {
+    if (err) {
+      console.log(err);
+      return;
+    } else {
+      res.redirect('/');
+    }
+  });
+});
+
 app.listen(port, () =>
   console.log(`App listening at http://localhost:${port}`)
 );
