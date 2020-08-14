@@ -4,6 +4,8 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const Article = require('./models/article');
 const session = require('express-session');
+const config = require('./config/database');
+const passport = require('passport');
 const articles_router = require('./routes/articles');
 const users_router = require('./routes/users');
 
@@ -13,7 +15,7 @@ const port = process.env.PORT || 5000;
 const db = mongoose.connection;
 
 // Database connection
-mongoose.connect('mongodb://localhost:27017/article_project', {
+mongoose.connect(config.database, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -51,8 +53,20 @@ app.use(function (req, res, next) {
   next();
 });
 
+// Passport config
+require('./config/passport')(passport);
+// Passport Middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
 // Public folder
 app.use(express.static(path.join(__dirname, 'public')));
+
+// User Login Logout "Global variable"
+app.get('*', (req, res, next) => {
+  res.locals.user = req.user || null;
+  next();
+});
 
 // GET Home Page
 app.get('/', (req, res) => {
