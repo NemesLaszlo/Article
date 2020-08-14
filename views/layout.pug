@@ -13,9 +13,10 @@ html
                 ul.navbar-nav.mr-auto
                     li.nav-item.active
                         a.nav-link(href='/')
-                            | Home 
-                    li.nav-item
-                        a.nav-link(href='/articles/add') Add Article
+                            | Home
+                    if user
+                        li.nav-item
+                            a.nav-link(href='/articles/add') Add Article
                 ul.nav.navbar-nav.navbar-right
                     if user
                         li.nav-item 
