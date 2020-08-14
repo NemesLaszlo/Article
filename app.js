@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const Article = require('./models/article');
 const session = require('express-session');
 const articles_router = require('./routes/articles');
+const users_router = require('./routes/users');
 
 // App Init
 const app = express();
@@ -69,6 +70,7 @@ app.get('/', (req, res) => {
 
 // Router
 app.use('/articles', articles_router);
+app.use('/users', users_router);
 
 app.listen(port, () =>
   console.log(`App listening at http://localhost:${port}`)

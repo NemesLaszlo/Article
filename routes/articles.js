@@ -21,7 +21,6 @@ router.post(
   ],
   (req, res) => {
     let { title, author, body } = req.body;
-    let article = new Article();
 
     const errors = validationResult(req);
 
@@ -31,9 +30,11 @@ router.post(
         errors: errors.mapped(),
       });
     } else {
-      article.title = title;
-      article.author = author;
-      article.body = body;
+      let article = new Article({
+        title,
+        author,
+        body,
+      });
 
       article.save((err) => {
         if (err) throw err;
