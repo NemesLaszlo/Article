@@ -115,6 +115,17 @@ app.post('/article/edit/:id', (req, res) => {
   });
 });
 
+// DELETE Delete single article by id
+app.delete('/article/:id', (req, res) => {
+  let query = { _id: req.params.id };
+  Article.remove(query, (err) => {
+    if (err) {
+      console.log(err);
+    }
+    res.send('Success');
+  });
+});
+
 app.listen(port, () =>
   console.log(`App listening at http://localhost:${port}`)
 );
