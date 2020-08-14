@@ -3,6 +3,8 @@ const path = require('path');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const Article = require('./models/article');
+const session = require('express-session');
+const articles_router = require('./routes/articles');
 
 // App Init
 const app = express();
@@ -32,6 +34,22 @@ app.set('view engine', 'pug');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+// Express Session Middleware
+app.use(
+  session({
+    secret: 'keyboard cat',
+    resave: true,
+    saveUninitialized: true,
+  })
+);
+
+// Express Messages Middleware
+app.use(require('connect-flash')());
+app.use(function (req, res, next) {
+  res.locals.messages = require('express-messages')(req, res);
+  next();
+});
+
 // Public folder
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -49,82 +67,8 @@ app.get('/', (req, res) => {
   });
 });
 
-// GET Add Page
-app.get('/articles/add', (req, res) => {
-  res.render('add_article', {
-    title: 'Add Article',
-  });
-});
-
-// POST Add Page Function request
-app.post('/articles/add', (req, res) => {
-  let { title, author, body } = req.body;
-  let article = new Article();
-  article.title = title;
-  article.author = author;
-  article.body = body;
-
-  article.save((err) => {
-    if (err) {
-      console.log(err);
-      return;
-    } else {
-      res.redirect('/');
-    }
-  });
-});
-
-// GET Get id specific article
-app.get('/article/:id', (req, res) => {
-  let { id } = req.params;
-  Article.findById(id, (err, article) => {
-    res.render('article', {
-      article,
-    });
-  });
-});
-
-// GET Get Edit Page
-app.get('/article/edit/:id', (req, res) => {
-  let { id } = req.params;
-  Article.findById(id, (err, article) => {
-    res.render('edit_article', {
-      title: 'Edit Article',
-      article,
-    });
-  });
-});
-
-// POST Edit Page Function request
-app.post('/article/edit/:id', (req, res) => {
-  let { title, author, body } = req.body;
-  let article = {};
-  article.title = title;
-  article.author = author;
-  article.body = body;
-
-  let query = { _id: req.params.id };
-
-  Article.update(query, article, (err) => {
-    if (err) {
-      console.log(err);
-      return;
-    } else {
-      res.redirect('/');
-    }
-  });
-});
-
-// DELETE Delete single article by id
-app.delete('/article/:id', (req, res) => {
-  let query = { _id: req.params.id };
-  Article.remove(query, (err) => {
-    if (err) {
-      console.log(err);
-    }
-    res.send('Success');
-  });
-});
+// Router
+app.use('/articles', articles_router);
 
 app.listen(port, () =>
   console.log(`App listening at http://localhost:${port}`)

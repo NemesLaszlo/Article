@@ -24,7 +24,11 @@
   "homepage": "https://github.com/NemesLaszlo/Article#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "connect-flash": "^0.1.1",
     "express": "^4.17.1",
+    "express-messages": "^1.0.1",
+    "express-session": "^1.17.1",
+    "express-validator": "^6.6.1",
     "mongoose": "^5.9.28",
     "pug": "^3.0.0"
   }
